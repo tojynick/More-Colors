@@ -9,7 +9,7 @@ Blender addon to make vertex painting easier!
 ## 🔧 Installation
 
 ## 📃 License
-Licensed under GNU General Public License, Version 3.0, ([LICENSE](LICENSE) or https://www.gnu.org/licenses/gpl-3.0.en.html)
+Licensed under GNU General Public License, Version 3.0, [LICENSE](LICENSE) or https://www.gnu.org/licenses/gpl-3.0.en.html
 
 ## ❤️ Gratitude
-Some ideas are inspired by [https://github.com/oRazeD](Ethan Simon-Law`s) [https://github.com/oRazeD/VertexColorsPlus/tree/stable](Vertex Color Plus) addon, check it out as well!
+Some ideas are inspired by [Ethan Simon-Law](https://github.com/oRazeD)`s [Vertex Color Plus](https://github.com/oRazeD/VertexColorsPlus/tree/stable) addon, check it out as well!
