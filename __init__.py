@@ -13,8 +13,9 @@ bl_info = {
 import bpy
 
 from .operators import enable_object_mode, enable_vertex_paint, show_hide_vertex_colors, add_random_color
+from .property_groups import random_color_tool_properties, global_color_settings_properties
 
-from .ui.settings_panel import settings_panel, display_settings_panel
+from .ui.settings_panel import settings_panel, display_settings_panel, color_settings_panel
 from .ui.tools_panel import tools_panel, random_color_tool_panel
 
 operator_classes = [
@@ -29,11 +30,13 @@ ui_classes = [
     settings_panel.MORECOLORS_PT_settings_panel,
     display_settings_panel.MORECOLORS_PT_display_settings_panel,
     tools_panel.MORECOLORS_PT_tools_panel,
-    random_color_tool_panel.MORECOLORS_PT_random_color_tool_panel
+    random_color_tool_panel.MORECOLORS_PT_random_color_tool_panel,
+    color_settings_panel.MORECOLORS_PT_global_color_settings_panel
 ]
 
 property_group_classes = [
-    add_random_color.RandomColorToolProperties
+    random_color_tool_properties.RandomColorToolProperties,
+    global_color_settings_properties.GlobalColorSettingsProperties
 ]
 
 def register():
@@ -46,7 +49,8 @@ def register():
     for prop_group_class in property_group_classes:
         bpy.utils.register_class(prop_group_class)
 
-    bpy.types.Scene.more_colors_random_color_tool = bpy.props.PointerProperty(type = add_random_color.RandomColorToolProperties)
+    bpy.types.Scene.more_colors_random_color_tool = bpy.props.PointerProperty(type = random_color_tool_properties.RandomColorToolProperties)
+    bpy.types.Scene.more_colors_gloabal_color_settings = bpy.props.PointerProperty(type = global_color_settings_properties.GlobalColorSettingsProperties)
 
 
 def unregister():
@@ -60,3 +64,4 @@ def unregister():
         bpy.utils.unregister_class(prop_group_class)
 
     del bpy.types.Scene.more_colors_random_color_tool
+    del bpy.types.Scene.more_colors_gloabal_color_settings
