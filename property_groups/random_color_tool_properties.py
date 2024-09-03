@@ -7,9 +7,18 @@ class RandomColorToolProperties(PropertyGroup):
         name = "Element",
         description = "Elements to generate colors on",
         items = [
-            ("Point", "Per Point", "Points are shared across faces"),
-            ("Vertex", "Per Vertex", "Vertices are unique per face"),
-            ("Face", "Per Face", "")
+            ("Point", "Per Point", "Points are shared across faces", "POINTCLOUD_POINT", 1),
+            ("Vertex", "Per Vertex", "Vertices are unique per face", "VERTEXSEL", 2),
+            ("Face", "Per Face", "", "SNAP_FACE", 3)
+            ]
+        )
+    
+    color_mode: EnumProperty(
+        name = "Random Color Mode",
+        description = "Color generation method",
+        items = [
+            ("RGBA", "RGB", "Randomizes color by RGBA values."),
+            ("Hue", "Hue", "Randomizes color only by hue. Saturation and alpha will be 1, lightness will be 0.5")
             ]
         )
     

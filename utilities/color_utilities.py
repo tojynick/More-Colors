@@ -1,7 +1,27 @@
 import random
+import colorsys
 
-def get_random_color():
-    return (random.random(), random.random(), random.random(), 1)
+def get_random_color_by_RGBA():
+    return (random.random(), random.random(), random.random(), random.random())
+
+
+def get_random_color_by_hue():
+    hue = random.random()
+    saturation = 1
+    lightness = 0.5
+    
+    r, g, b = colorsys.hls_to_rgb(hue, lightness, saturation)
+    
+    return (r, g, b, 1)
+
+
+def get_random_color(mode = "RGBA"):
+    match mode:
+        case "RGBA":
+            return get_random_color_by_RGBA()
+        case "Hue":
+            return get_random_color_by_hue()
+
 
 def get_masked_color(old_color, new_color, mask = (True, True, True, True)):
     """Applies new_color to old_color using mask and then returns the result."""

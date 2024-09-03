@@ -1,4 +1,4 @@
-from bpy.props import BoolProperty
+from bpy.props import BoolProperty, EnumProperty
 from bpy.types import PropertyGroup
 
 class GlobalColorSettingsProperties(PropertyGroup):
