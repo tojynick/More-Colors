@@ -12,21 +12,27 @@ bl_info = {
 
 import bpy
 
-from .operators import enable_object_mode, enable_vertex_paint, show_hide_vertex_colors, add_random_color
+from .utilities.icon_loader import IconsLoader
+
+from .operators import enable_object_mode, enable_vertex_paint, show_hide_vertex_colors, add_random_color, open_documentation
 from .property_groups import random_color_tool_properties, global_color_settings_properties
 
 from .ui.settings_panel import settings_panel, display_settings_panel, color_settings_panel
 from .ui.tools_panel import tools_panel, random_color_tool_panel
+from .ui import about_panel
+
 
 operator_classes = [
     enable_object_mode.MORECOLORS_OT_enable_object_mode,
     enable_vertex_paint.MORECOLORS_OT_enable_vertex_paint_mode,
     show_hide_vertex_colors.MORECOLORS_OT_show_vertex_colors,
     show_hide_vertex_colors.MORECOLORS_OT_hide_vertex_colors,
-    add_random_color.MORECOLORS_OT_add_random_color
+    add_random_color.MORECOLORS_OT_add_random_color,
+    open_documentation.MORECOLORS_OT_open_documentation
 ]
 
 ui_classes = [
+    about_panel.MORECOLORS_PT_about_panel,
     settings_panel.MORECOLORS_PT_settings_panel,
     display_settings_panel.MORECOLORS_PT_display_settings_panel,
     tools_panel.MORECOLORS_PT_tools_panel,
@@ -39,7 +45,9 @@ property_group_classes = [
     global_color_settings_properties.GlobalColorSettingsProperties
 ]
 
+
 def register():
+    # Register classes
     for operator_class in operator_classes:
         bpy.utils.register_class(operator_class)
 
@@ -52,8 +60,13 @@ def register():
     bpy.types.Scene.more_colors_random_color_tool = bpy.props.PointerProperty(type = random_color_tool_properties.RandomColorToolProperties)
     bpy.types.Scene.more_colors_gloabal_color_settings = bpy.props.PointerProperty(type = global_color_settings_properties.GlobalColorSettingsProperties)
 
+    # Register icons    
+    bpy.types.Scene.preview_collection = bpy.utils.previews.new()
+    IconsLoader.register_custom_icons()
+
 
 def unregister():
+    # Unregister classes
     for operator_class in operator_classes:
         bpy.utils.unregister_class(operator_class)
     
@@ -65,3 +78,7 @@ def unregister():
 
     del bpy.types.Scene.more_colors_random_color_tool
     del bpy.types.Scene.more_colors_gloabal_color_settings
+
+    # Unrefister icons
+    bpy.utils.previews.remove(bpy.types.Scene.preview_collection)
+    del bpy.types.Scene.preview_collection
