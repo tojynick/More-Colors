@@ -14,7 +14,7 @@ import bpy
 
 from .utilities.icon_loader import IconsLoader
 
-from .operators import enable_object_mode, enable_vertex_paint, show_hide_vertex_colors, add_random_color, open_documentation
+from .operators import enable_object_mode, enable_vertex_paint, show_hide_vertex_colors, add_random_color, open_documentation, reset_color
 from .property_groups import random_color_tool_properties, global_color_settings_properties
 
 from .ui.settings_panel import settings_panel, display_settings_panel, color_settings_panel
@@ -28,7 +28,8 @@ operator_classes = [
     show_hide_vertex_colors.MORECOLORS_OT_show_vertex_colors,
     show_hide_vertex_colors.MORECOLORS_OT_hide_vertex_colors,
     add_random_color.MORECOLORS_OT_add_random_color,
-    open_documentation.MORECOLORS_OT_open_documentation
+    open_documentation.MORECOLORS_OT_open_documentation,
+    reset_color.MORECOLORS_OT_reset_color
 ]
 
 ui_classes = [

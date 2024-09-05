@@ -1,4 +1,4 @@
-from .base_operator import BaseOperator
+from .base_operators import BaseOperator
 
 class MORECOLORS_OT_show_vertex_colors(BaseOperator):
     bl_label = "Show Vertex Colors"

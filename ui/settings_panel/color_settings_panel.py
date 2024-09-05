@@ -11,6 +11,15 @@ class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
         scene = context.scene
         tool = scene.more_colors_gloabal_color_settings
 
+        # Reset Vertex Colors
+        row = layout.row()
+        row.label(text = "Reset", icon = "CANCEL")
+
+        row = layout.row()
+        row.operator("morecolors.reset_vertex_colors")
+
+        layout.separator()
+
         # Global Color Mask
         row = layout.row()
         row.label(text = "Color Mask", icon = "COLOR")
@@ -18,7 +27,6 @@ class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
         row = layout.row()
         row.label(text = "Affected color channels:")
 
-        
         row = layout.row(align = True)
         row.prop(tool, "global_color_mask_r", text = "R", toggle = True)
         row.prop(tool, "global_color_mask_g", text = "G", toggle = True)

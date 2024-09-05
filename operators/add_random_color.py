@@ -1,9 +1,9 @@
 from ..utilities.color_utilities import get_masked_color, get_random_color
-from .base_operator import BaseOperator
+from .base_operators import BaseColorOperator
 import bpy
 
 
-class MORECOLORS_OT_add_random_color(BaseOperator):
+class MORECOLORS_OT_add_random_color(BaseColorOperator):
     """Adds a random vertex color for each vertex to the selected mesh"""
     bl_label = "Add Random Color"
     bl_idname = "morecolors.add_random_color"

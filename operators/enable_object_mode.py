@@ -1,4 +1,4 @@
-from .base_operator import BaseOperator
+from .base_operators import BaseOperator
 import bpy
 
 class MORECOLORS_OT_enable_object_mode(BaseOperator):

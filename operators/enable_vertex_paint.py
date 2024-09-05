@@ -1,5 +1,5 @@
 import bpy
-from .base_operator import BaseOperator
+from .base_operators import BaseOperator
 
 class MORECOLORS_OT_enable_vertex_paint_mode(BaseOperator):
     bl_label = "Switch To Vertex Paint Mode"
