@@ -9,16 +9,7 @@ class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        tool = scene.more_colors_gloabal_color_settings
-
-        # Reset Vertex Colors
-        row = layout.row()
-        row.label(text = "Reset", icon = "CANCEL")
-
-        row = layout.row()
-        row.operator("morecolors.reset_vertex_colors")
-
-        layout.separator()
+        tool = scene.more_colors_global_color_settings
 
         # Global Color Mask
         row = layout.row()
@@ -32,3 +23,9 @@ class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
         row.prop(tool, "global_color_mask_g", text = "G", toggle = True)
         row.prop(tool, "global_color_mask_b", text = "B", toggle = True)
         row.prop(tool, "global_color_mask_a", text = "A", toggle = True)
+
+        layout.separator()
+
+        # Reset Vertex Colors
+        row = layout.row()
+        row.operator("morecolors.reset_vertex_colors", icon = "TRASH")

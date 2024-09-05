@@ -46,7 +46,7 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
     def execute(self, context):
         scene = context.scene
         random_color_tool = scene.more_colors_random_color_tool
-        global_color_settings = scene.more_colors_gloabal_color_settings
+        global_color_settings = scene.more_colors_global_color_settings
 
         if len(context.selected_objects) == 0:
             self.report({"ERROR"}, "No objects selected!")

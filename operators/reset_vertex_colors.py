@@ -22,5 +22,7 @@ class MORECOLORS_OT_reset_color(BaseColorOperator):
             for face in mesh.polygons:
                 for loop_index in face.loop_indices:
                     vertex_colors.data[loop_index].color = (1,1,1,1)
+        
+        self.report({"INFO"}, "Vertex colors have been reset!")
 
         return {"FINISHED"}

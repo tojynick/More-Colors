@@ -11,6 +11,9 @@ class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
         layout = self.layout
         
         random_color_tool = context.scene.more_colors_random_color_tool
+
+        row = layout.row()
+        row.label(text = "Applies a random vertex color per selected element.")
         
         row = layout.row()
         row.prop(random_color_tool, "element_type")
