@@ -1,6 +1,7 @@
 from ..utilities.color_utilities import get_masked_color, get_random_color
 from .base_operators import BaseColorOperator
 import bpy
+import bmesh
 
 
 class MORECOLORS_OT_add_random_color(BaseColorOperator):
@@ -17,30 +18,30 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
         return len(context.selected_objects) > 0 and bpy.context.object.mode == "OBJECT"
 
 
-    def add_random_color_per_face(self, mesh, vertex_colors, global_color_settings, random_color_tool):
-        for face in mesh.polygons:
+    def add_random_color_per_face(self, bm, color_layer, global_color_settings, random_color_tool):
+        for face in bm.faces:
             random_color = get_random_color(random_color_tool.color_mode)
 
-            for loop_index in face.loop_indices:
-                vertex_colors.data[loop_index].color = get_masked_color(vertex_colors.data[loop_index].color, random_color, global_color_settings.get_mask())
+            for loop in face.loops:
+                loop[color_layer] = get_masked_color(loop[color_layer], random_color, global_color_settings.get_mask())
 
     
-    def add_random_color_per_point(self, mesh, vertex_colors, global_color_settings, random_color_tool):
+    def add_random_color_per_point(self, bm, color_layer, global_color_settings, random_color_tool):
         point_colors = {}
 
-        for vertex in mesh.vertices:
+        for vertex in bm.verts:
             point_colors[vertex.index] = get_random_color(random_color_tool.color_mode)
         
-        for face in mesh.polygons:
-            for loop_index in face.loop_indices:
-                vertex_index = mesh.loops[loop_index].vertex_index
-                vertex_colors.data[loop_index].color = get_masked_color(vertex_colors.data[loop_index].color, point_colors[vertex_index], global_color_settings.get_mask())
+        for face in bm.faces:
+            for loop in face.loops:
+                loop[color_layer] = get_masked_color(loop[color_layer], point_colors[loop.vert.index], global_color_settings.get_mask())
     
 
-    def add_random_color_per_vertex(self, mesh, vertex_colors, global_color_settings, random_color_tool):
-        for face in mesh.polygons:
-            for loop_index in face.loop_indices:
-                vertex_colors.data[loop_index].color = get_masked_color(vertex_colors.data[loop_index].color, get_random_color(random_color_tool.color_mode), global_color_settings.get_mask())
+    def add_random_color_per_vertex(self, bm, color_layer, global_color_settings, random_color_tool):
+        for face in bm.faces:
+            for loop in face.loops:
+                random_color = get_random_color(random_color_tool.color_mode)
+                loop[color_layer] = get_masked_color(loop[color_layer], random_color, global_color_settings.get_mask())
 
 
     def execute(self, context):
@@ -59,17 +60,25 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
             mesh = obj.data
             
             if not mesh.vertex_colors:
-                vertex_colors = mesh.vertex_colors.new(name = "Attribute")
-            else:
-                vertex_colors = mesh.vertex_colors.active
+                mesh.vertex_colors.new(name = "Attribute")
+
+            bm = bmesh.new()
+            bm.from_mesh(mesh)
+            
+            color_layer = bm.loops.layers.color.active
 
             match random_color_tool.element_type:
                 case "Point":
-                    self.add_random_color_per_point(mesh, vertex_colors, global_color_settings, random_color_tool)
+                    self.add_random_color_per_point(bm, color_layer, global_color_settings, random_color_tool)
                 case "Vertex":
-                    self.add_random_color_per_vertex(mesh, vertex_colors, global_color_settings, random_color_tool)
+                    self.add_random_color_per_vertex(bm, color_layer, global_color_settings, random_color_tool)
                 case "Face":
-                    self.add_random_color_per_face(mesh, vertex_colors, global_color_settings, random_color_tool)
+                    self.add_random_color_per_face(bm, color_layer, global_color_settings, random_color_tool)
+
+            bm.to_mesh(mesh)
+            bm.free()
+
+            obj.data.update()
             
             self.report({"INFO"}, "Random vertex color applied!")
 

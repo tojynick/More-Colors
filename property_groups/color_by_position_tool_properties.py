@@ -13,26 +13,16 @@ class ColorByPositionToolProperties(PropertyGroup):
         default = "World"
         )
     
-    gradient_range: EnumProperty(
-        name = "Gradient Range Mode",
-        description = "Determines where will be minimum and maximum positions of the gradient",
-        items = [
-            ("Per Object", "Range Per Object", "Only takes operated object's vertex positions into account. If several objects selected, each object will have its own range", "OBJECT_DATA", 1),
-            ("Global", "Global Range", "Takes all selected object's vertex positions into account", "OUTLINER_COLLECTION", 2)
-            ],
-        default = "Global"
-        )
-    
     gradient_direction: EnumProperty(
         name = "Gradient Direction",
         description = "In what way the gradient will go",
         items = [
             ("X", "X Axis", ""),
-            ("Inv_X", "-X Axis", ""),
+            ("-X", "-X Axis", ""),
             ("Y", "Y Axis", ""),
-            ("Inv_Y", "-Y Axis", ""),
+            ("-Y", "-Y Axis", ""),
             ("Z", "Z Axis", ""),
-            ("Inv_Z", "-Z Axis", "")
+            ("-Z", "-Z Axis", "")
             ],
         default = "Z"
         )

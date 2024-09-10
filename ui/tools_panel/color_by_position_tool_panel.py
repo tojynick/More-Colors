@@ -20,10 +20,6 @@ class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
         row.prop(color_by_position_tool, "space_type", expand = True)
 
         row = layout.row()
-        row.label(text = "Gradient Range:")
-        row.prop(color_by_position_tool, "gradient_range",  expand = True)
-
-        row = layout.row()
         row.prop(color_by_position_tool, "gradient_direction")
 
         row = layout.row()
