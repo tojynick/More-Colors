@@ -9,7 +9,7 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
     bl_idname = "morecolors.add_color_by_position"
     
     def execute(self, context):
-        if len(context.selected_objects) == 0:
+        if not context.selected_objects:
             self.report({"ERROR"}, "No objects selected!")
             return {"CANCELLED"}
         
@@ -17,69 +17,50 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
         global_color_settings = scene.more_colors_global_color_settings
         color_by_position_tool = scene.more_colors_color_by_position_tool
 
-        
+        gradient_direction = color_by_position_tool.gradient_direction
+        axis_index = {"X": 0, "Y": 1, "Z": 2}[gradient_direction[-1]]
+
+        # Reverse direction names always have more than one letter in the name
+        reverse_gradient = len(gradient_direction) > 1  
+
         for obj in context.selected_objects:
             if obj.type != "MESH":
                 continue
             
             mesh = obj.data
-
             if not mesh.vertex_colors:
-                mesh.vertex_colors.new(name = "Attribute")
+                mesh.vertex_colors.new(name="Attribute")
 
             bm = bmesh.new()
             bm.from_mesh(mesh)
-
             color_layer = bm.loops.layers.color.active
 
-            match color_by_position_tool.space_type:
-                case "Local":
-                    vertex_positions = [v.co for v in bm.verts]
-                case "World":
-                     # Convert local vertex positions to world positions using object's transform
-                    vertex_positions = [obj.matrix_world @ v.co for v in bm.verts]
+            vertex_positions = [obj.matrix_world @ v.co if color_by_position_tool.space_type == "World" else v.co for v in bm.verts]
 
-            if color_by_position_tool.gradient_direction == "X" or color_by_position_tool.gradient_direction == "-X":
-                min_pos = min(v.x for v in vertex_positions)
-                max_pos = max(v.x for v in vertex_positions)
-            elif color_by_position_tool.gradient_direction == "Y" or color_by_position_tool.gradient_direction == "-Y":
-                min_pos = min(v.y for v in vertex_positions)
-                max_pos = max(v.y for v in vertex_positions)
-            elif color_by_position_tool.gradient_direction == "Z" or color_by_position_tool.gradient_direction == "-Z":
-                min_pos = min(v.z for v in vertex_positions)
-                max_pos = max(v.z for v in vertex_positions)
+            # Calculate min and max based on the axis
+            positions_along_axis = [pos[axis_index] for pos in vertex_positions]
+            min_pos = min(positions_along_axis)
+            max_pos = max(positions_along_axis)
 
-            if max_pos == min_pos:
-                range = 1
-            else:
-                range = max_pos - min_pos
+            # Avoid cases, where max and min pos are the same
+            range = max(max_pos - min_pos, 1)  
 
             for face in bm.faces:
                 for loop in face.loops:
                     vert_index = loop.vert.index
+                    pos_value = vertex_positions[vert_index][axis_index]
 
-                    if color_by_position_tool.gradient_direction == "X" or color_by_position_tool.gradient_direction == "-X":
-                        pos = vertex_positions[vert_index].x
-                    elif color_by_position_tool.gradient_direction == "Y" or color_by_position_tool.gradient_direction == "-Y":
-                        pos = vertex_positions[vert_index].y
-                    elif color_by_position_tool.gradient_direction == "Z" or color_by_position_tool.gradient_direction == "-Z":
-                        pos = vertex_positions[vert_index].z
-
-                    gradient_value = (pos - min_pos) / range
-
-                    # Positive directions always have 1 letter (X, Y, Z)
-                    if len(color_by_position_tool.gradient_direction) > 1:
+                    gradient_value = (pos_value - min_pos) / range
+                    
+                    if reverse_gradient:
                         gradient_value = 1 - gradient_value
 
                     color = (gradient_value, gradient_value, gradient_value, 1)
-                    loop[color_layer] = get_masked_color((0,0,0,0), color, global_color_settings.get_mask())
-            
+                    loop[color_layer] = get_masked_color((0, 0, 0, 0), color, global_color_settings.get_mask())
 
             bm.to_mesh(mesh)
             bm.free()
-            
             obj.data.update()
-            
-            self.report({"INFO"}, "Vertex colors assigned successfully")
 
+        self.report({"INFO"}, "Vertex colors assigned successfully!")
         return {"FINISHED"}
