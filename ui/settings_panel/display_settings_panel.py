@@ -10,18 +10,15 @@ class MORECOLORS_PT_display_settings_panel(BasePanelInfo, Panel):
         layout = self.layout
 
         if context.object and context.object.type == "MESH":
-            row = layout.row()
-            if context.object.mode != "VERTEX_PAINT":
-                row.operator("morecolors.enable_vertex_paint_mode", icon = "VPAINT_HLT")
-            else:
-                row.operator("morecolors.enable_object_mode", icon = "OBJECT_DATAMODE")
-
             if context.object.mode != "VERTEX_PAINT":
                 row = layout.row()
                 if context.space_data.shading.color_type != "VERTEX":
                     row.operator("morecolors.show_vertex_colors", icon = "HIDE_ON")
                 else:
                     row.operator("morecolors.hide_vertex_colors", icon = "HIDE_OFF")
+            else:
+                row = layout.row()
+                row.label(text = "Enter object mode!", icon = "ERROR")
 
         elif context.object:
             row = layout.row()

@@ -14,12 +14,11 @@ import bpy
 from . import operators, ui, property_groups
 from .utilities.icon_loader import IconsLoader
 
-modules = [operators, ui, property_groups]
+packages = [operators, ui, property_groups]
 
 def register():
-
-    for module in modules:
-        module.register()
+    for package in packages:
+        package.register()
 
     # Register icons    
     bpy.types.Scene.preview_collection = bpy.utils.previews.new()
@@ -27,8 +26,8 @@ def register():
 
 
 def unregister():
-    for module in modules:
-        module.unregister()
+    for package in packages:
+        package.unregister()
 
     # Unregister icons
     bpy.utils.previews.remove(bpy.types.Scene.preview_collection)

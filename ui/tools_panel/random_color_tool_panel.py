@@ -6,6 +6,7 @@ class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
     bl_idname = "MORECOLORS_PT_random_color_tool_panel"
     bl_parent_id = "MORECOLORS_PT_tools_panel"
     bl_options = {"DEFAULT_CLOSED"}
+    bl_order = 1
 
     def draw(self, context):
         layout = self.layout

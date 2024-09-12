@@ -1,7 +1,7 @@
 import bpy
 
 from .settings_panel import settings_panel, display_settings_panel, color_settings_panel
-from .tools_panel import tools_panel, random_color_tool_panel, color_by_position_tool_panel
+from .tools_panel import simple_fill_tool_panel, tools_panel, random_color_tool_panel, color_by_position_tool_panel
 from . import about_panel
 
 classes = (
@@ -11,7 +11,8 @@ classes = (
     tools_panel.MORECOLORS_PT_tools_panel,
     random_color_tool_panel.MORECOLORS_PT_random_color_tool_panel,
     color_settings_panel.MORECOLORS_PT_global_color_settings_panel,
-    color_by_position_tool_panel.MORECOLORS_PT_random_color_tool_panel
+    color_by_position_tool_panel.MORECOLORS_PT_random_color_tool_panel,
+    simple_fill_tool_panel.MORECOLORS_PT_simple_fill_tool_panel
 )
 
 def register():
