@@ -7,7 +7,7 @@ class RandomColorToolProperties(PropertyGroup):
         name = "Element",
         description = "Elements to generate colors on",
         items = [
-            ("Point", "Per Point", "Points are shared across faces", "POINTCLOUD_POINT", 1),
+            ("Point", "Per Point", "Points are shared across faces", "DECORATE", 1),
             ("Vertex", "Per Vertex", "Vertices are unique per face", "VERTEXSEL", 2),
             ("Face", "Per Face", "Faces are well... faces", "SNAP_FACE", 3)
             ]

@@ -3,8 +3,6 @@ from bpy.types import Operator
 import bpy
 import bmesh
 
-import copy
-
 
 class MORECOLORS_OT_simple_fill(bpy.types.Operator):
     bl_label = "Apply"
@@ -75,7 +73,7 @@ class MORECOLORS_OT_simple_fill(bpy.types.Operator):
 
             for loop in selected_loops:
                 color = simple_fill_tool.selected_color
-                loop[color_layer] = get_masked_color((0, 0, 0, 0), color, global_color_settings.get_mask())
+                loop[color_layer] = get_masked_color(loop[color_layer], color, global_color_settings.get_mask())
 
             bm.to_mesh(mesh)
             bm.free()
