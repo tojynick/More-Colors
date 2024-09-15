@@ -56,7 +56,7 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
                         gradient_value = 1 - gradient_value
 
                     color = (gradient_value, gradient_value, gradient_value, 1)
-                    loop[color_layer] = get_masked_color((0, 0, 0, 0), color, global_color_settings.get_mask())
+                    loop[color_layer] = get_masked_color(loop[color_layer], color, global_color_settings.get_mask())
 
             bm.to_mesh(mesh)
             bm.free()
