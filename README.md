@@ -12,7 +12,7 @@ A simple Blender add-on that makes working with vertex colors easier.
 
 ## ✅ Prerequisites
 
-- [Blender 3.1 or higher](https://www.blender.org/download/)
+- [Blender 4.2 or higher](https://www.blender.org/download/)
 
 ## 🔧 Installation
 

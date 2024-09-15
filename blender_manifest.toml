@@ -10,7 +10,7 @@ type = "add-on"
 website = "https://github.com/tojynick/More-Colors"
 tags = ["3D View", "Mesh", "Paint"]
 
-blender_version_min = "3.1.0"
+blender_version_min = "4.2.0"
 
 license = [
   "SPDX:GPL-3.0-or-later"
