@@ -5,6 +5,8 @@ import bmesh
 
 
 class MORECOLORS_OT_simple_fill(bpy.types.Operator):
+    """Fills a selected mesh object(s) or part of mesh with one color."""
+
     bl_label = "Apply"
     bl_idname = "morecolors.simple_fill"
 
@@ -120,9 +122,7 @@ class MORECOLORS_OT_apply_preset_color(bpy.types.Operator):
         previous_selected_color = list(simple_fill_tool.selected_color)
 
         simple_fill_tool.selected_color = getattr(simple_fill_tool, self.preset_name)
-
         bpy.ops.morecolors.simple_fill()
-
         simple_fill_tool.selected_color = previous_selected_color
 
         return {"FINISHED"}

@@ -1,10 +1,10 @@
 from .base_operators import BaseColorOperator
 from ..utilities.color_utilities import get_masked_color
-import bpy
 import bmesh
 
 class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
-
+    """Adds a color based on vertex position for each selected mesh object."""
+    
     bl_label = "Add Color By Position"
     bl_idname = "morecolors.add_color_by_position"
     
@@ -29,7 +29,7 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
             
             mesh = obj.data
             if not mesh.vertex_colors:
-                mesh.vertex_colors.new(name="Attribute")
+                mesh.vertex_colors.new(name = "Attribute")
 
             bm = bmesh.new()
             bm.from_mesh(mesh)

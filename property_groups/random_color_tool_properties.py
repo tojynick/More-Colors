@@ -1,7 +1,6 @@
 from bpy.props import EnumProperty
 from bpy.types import PropertyGroup
 
-
 class RandomColorToolProperties(PropertyGroup):
     element_type: EnumProperty(
         name = "Element",

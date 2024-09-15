@@ -1,4 +1,4 @@
-<img alt="Addon banner" src="./Resources/Banner.png"/>
+<img alt="Addon banner" src="./resources/banner.png"/>
 
 # 🖌️ More Colors!
 

@@ -1,7 +1,6 @@
 from ..base_panel_info import BasePanelInfo
 from bpy.types import Panel
 
-
 class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
     bl_label = "Global Color Settings"
     bl_idname = "MORECOLORS_PT_global_color_settings_panel"

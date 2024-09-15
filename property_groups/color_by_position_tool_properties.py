@@ -1,7 +1,6 @@
 from bpy.props import EnumProperty
 from bpy.types import PropertyGroup
 
-
 class ColorByPositionToolProperties(PropertyGroup):
     space_type: EnumProperty(
         name = "Space",

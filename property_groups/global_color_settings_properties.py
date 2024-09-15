@@ -2,7 +2,6 @@ from bpy.props import BoolProperty, EnumProperty
 from bpy.types import PropertyGroup
 
 class GlobalColorSettingsProperties(PropertyGroup):
-
     global_color_mask_r: BoolProperty(name = "R", description = "Use Red Channel", default = True)
     global_color_mask_g: BoolProperty(name = "G", description = "Use Green Channel", default = True)
     global_color_mask_b: BoolProperty(name = "B", description = "Use Blue Channel", default = True)

@@ -1,7 +1,6 @@
 from bpy.props import FloatVectorProperty
 from bpy.types import PropertyGroup
 
-
 class SimpleFillToolProperties(PropertyGroup):
 
     selected_color: FloatVectorProperty(
@@ -13,7 +12,6 @@ class SimpleFillToolProperties(PropertyGroup):
         max = 1,
         size = 4
     )
-
 
     preset_color_1: FloatVectorProperty(
         name = "Preset Color 1",
@@ -54,4 +52,3 @@ class SimpleFillToolProperties(PropertyGroup):
             max = 1,
             size = 4
         )
-

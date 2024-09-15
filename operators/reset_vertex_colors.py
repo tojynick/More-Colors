@@ -2,7 +2,7 @@ from .base_operators import BaseColorOperator
 import bpy
 
 class MORECOLORS_OT_reset_color(BaseColorOperator):
-    """Resets all vertex colors to white"""
+    """Resets all vertex colors to white."""
 
     bl_label = "Reset Vertex Colors"
     bl_idname = "morecolors.reset_vertex_colors"

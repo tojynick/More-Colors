@@ -3,15 +3,16 @@ from .base_operators import BaseColorOperator
 import bpy
 import bmesh
 
-
 class MORECOLORS_OT_add_random_color(BaseColorOperator):
-    """Adds a random vertex color for each vertex to the selected mesh"""
+    """Adds a random color per selected element (point, vertex, face) for each selected mesh object."""
+
     bl_label = "Add Random Color"
     bl_idname = "morecolors.add_random_color"
 
     def draw(self, context):
         layout = self.layout
         layout.prop(self, "elements_enum")
+
 
     @classmethod
     def poll(cls, context):

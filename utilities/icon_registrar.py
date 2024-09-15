@@ -2,9 +2,10 @@ import bpy
 import bpy.utils.previews
 import os
 
-class IconsLoader():
+class IconsRegistrar():
+
     icons_to_register = {
-        "MORE_COLORS_LOGO": "Resources\Icon.png"
+        "MORE_COLORS_LOGO": "resources\icon.png"
     }
 
     @classmethod
