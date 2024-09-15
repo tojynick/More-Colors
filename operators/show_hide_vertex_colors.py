@@ -1,7 +1,7 @@
 from .base_operators import BaseOperator
 
 class MORECOLORS_OT_show_vertex_colors(BaseOperator):
-    """Enables vertex colors preview in the 3d viewport."""
+    """Enables vertex colors preview in the 3d viewport"""
 
     bl_label = "Show Vertex Colors"
     bl_idname = "morecolors.show_vertex_colors"

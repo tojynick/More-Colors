@@ -5,7 +5,7 @@ import bmesh
 
 
 class MORECOLORS_OT_simple_fill(bpy.types.Operator):
-    """Fills a selected mesh object(s) or part of mesh with one color."""
+    """Applies a selected color to selected object(s) or part of the mesh"""
 
     bl_label = "Apply"
     bl_idname = "morecolors.simple_fill"
@@ -90,6 +90,8 @@ class MORECOLORS_OT_simple_fill(bpy.types.Operator):
     
 
 class MORECOLORS_OT_select_preset_color(bpy.types.Operator):
+    """Selects the preset's color"""
+
     bl_label = "Select"
     bl_idname = "morecolors.select_preset_color"
 
@@ -105,6 +107,8 @@ class MORECOLORS_OT_select_preset_color(bpy.types.Operator):
     
 
 class MORECOLORS_OT_apply_preset_color(bpy.types.Operator):
+    """Applies the preset color to selected object(s) or part of the mesh"""
+
     bl_label = "Quick Apply"
     bl_idname = "morecolors.apply_preset_color"
 

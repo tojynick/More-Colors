@@ -4,7 +4,7 @@ import bpy
 import bmesh
 
 class MORECOLORS_OT_add_random_color(BaseColorOperator):
-    """Adds a random color per selected element (point, vertex, face) for each selected mesh object."""
+    """Adds a random color per chosen element (point, vertex, face) for each selected mesh object"""
 
     bl_label = "Add Random Color"
     bl_idname = "morecolors.add_random_color"

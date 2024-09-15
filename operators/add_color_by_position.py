@@ -3,7 +3,7 @@ from ..utilities.color_utilities import get_masked_color
 import bmesh
 
 class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
-    """Adds a color based on vertex position for each selected mesh object."""
+    """Adds a color based on vertex position for each selected mesh object"""
     
     bl_label = "Add Color By Position"
     bl_idname = "morecolors.add_color_by_position"
