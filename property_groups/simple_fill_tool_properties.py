@@ -17,7 +17,7 @@ class SimpleFillToolProperties(PropertyGroup):
         name = "Preset Color 1",
         description = "Choose a color",
         subtype = "COLOR",
-        default = (1, 0, 0.03, 1),
+        default = (1.000, 0.050, 0.078, 1.000),
         min = 0, 
         max = 1,
         size = 4
@@ -27,7 +27,7 @@ class SimpleFillToolProperties(PropertyGroup):
         name = "Preset Color 2",
         description = "Choose a color",
         subtype = "COLOR",
-        default = (1, 0.730, 0, 1),
+        default = (1.000, 0.743, 0.050, 1.000),
         min = 0, 
         max = 1,
         size = 4
@@ -37,7 +37,7 @@ class SimpleFillToolProperties(PropertyGroup):
             name = "Preset Color 3",
             description = "Choose a color",
             subtype = "COLOR",
-            default = (0.483, 0.788, 0, 1),
+            default = (0.498, 0.788, 0.039, 1.000),
             min = 0, 
             max = 1,
             size = 4
@@ -47,7 +47,7 @@ class SimpleFillToolProperties(PropertyGroup):
             name = "Preset Color 4",
             description = "Choose a color",
             subtype = "COLOR",
-            default = (0, 0.475, 0.768, 1),
+            default = (0.038, 0.490, 0.768, 1.000),
             min = 0, 
             max = 1,
             size = 4
