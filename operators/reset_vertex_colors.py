@@ -2,7 +2,7 @@ from .base_operators import BaseColorOperator
 import bpy
 
 class MORECOLORS_OT_reset_color(BaseColorOperator):
-    """Resets all vertex colors to white"""
+    """Resets all vertex colors to black"""
 
     bl_label = "Reset Vertex Colors"
     bl_idname = "morecolors.reset_vertex_colors"
@@ -21,7 +21,7 @@ class MORECOLORS_OT_reset_color(BaseColorOperator):
 
             for face in mesh.polygons:
                 for loop_index in face.loop_indices:
-                    vertex_colors.data[loop_index].color = (1,1,1,1)
+                    vertex_colors.data[loop_index].color = (0,0,0,0)
         
         self.report({"INFO"}, "Vertex colors have been reset!")
 
