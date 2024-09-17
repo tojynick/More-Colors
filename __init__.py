@@ -25,13 +25,11 @@ def unregister_icons():
     bpy.utils.previews.remove(bpy.types.Scene.preview_collection)
     del bpy.types.Scene.preview_collection
 
-
 def register():
     for package in packages:
         package.register()
 
     register_icons()
-
 
 def unregister():
     for package in packages:

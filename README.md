@@ -16,7 +16,25 @@ A simple Blender add-on that makes working with vertex colors easier.
 
 ## 🔧 Installation
 
-🚧 _To be written..._
+There are two ways to install the add-on: **via Blender's extensions** or **manually**. Let's take a look at each option.
+
+### Manual Installation
+
+1. Download the latest version of the package
+2. Inside Blender go to **Edit** -> **Preferences** -> **Get Extensions**
+3. Click on the down arrow at the top right corner <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png"/>
+4. Press **"Install from Disk..."**
+5. Selected the **downloaded package**
+6. Enjoy ✨
+
+### Installation Via Blender's Extensions
+
+🚧 The add-on is still under review, so at the moment it is not publicly visible as Blender extension. You can speed up the reviewing process by going to https://extensions.blender.org/approval-queue/more-colors/
+
+1. Inside Blender go to **Edit** -> **Preferences** -> **Get Extensions**
+2. In the search box type **"More Colors!"**
+3. Click **"Install"**
+4. You're awesome ✨
 
 ## 🚀 Getting Started
 
@@ -78,7 +96,7 @@ There are several elements per which random colors will be generated:
 The difference between points and vertices is that _a point can share several vertices_, but _a vertex is the smallest unit and cannot be divided into something else_.
 
 Oh, and about linked. Linked elements usually occur, when you **combine several meshes into one**, by using Join _(Ctrl + J)_ for example. Even though the result of Join is a single mesh, you still can **split it by vertex connectivity** and **apply different colors per linked piece**.
-This might be useful, when you have a complex object consisting of several independent parts and you want to quickly make an ID map for it.
+This might be useful when you have a complex object consisting of several independent parts and you want to quickly make an ID map for it.
 
 #### Color Generation Algorithm
 
