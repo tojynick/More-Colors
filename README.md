@@ -22,10 +22,13 @@ There are two ways to install the add-on: **via Blender's extensions** or **manu
 
 1. Download the latest version of the package
 2. Inside Blender go to **Edit** -> **Preferences** -> **Get Extensions**
-3. Click on the down arrow at the top right corner <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png"/>
-4. Press **"Install from Disk..."**
-5. Selected the **downloaded package**
-6. Enjoy ✨
+3. Click on the down arrow at the top right corner
+
+   <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png"/>
+   
+5. Press **"Install from Disk..."**
+6. Selected the **downloaded package**
+7. Enjoy ✨
 
 ### Installation Via Blender's Extensions
 
