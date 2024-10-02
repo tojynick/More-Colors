@@ -45,15 +45,15 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
                 loop[color_layer] = get_masked_color(loop[color_layer], random_color, global_color_settings.get_mask())
     
     
-    def add_random_color_per_linked(self, bm, color_layer, global_color_settings, random_color_tool):
-        linked_faces = []
+    def add_random_color_per_island(self, bm, color_layer, global_color_settings, random_color_tool):
+        island_faces = []
         visited_faces = set()
 
-        def get_linked_faces(face):
-            """Recursively collects all faces linked to the given face"""
+        def get_connected_faces(face):
+            """Recursively collects all faces connected to the given face"""
 
             stack = [face]
-            linked = set()
+            connected_faces = set()
 
             while stack:
                 current_face = stack.pop()
@@ -62,7 +62,7 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
                     continue
 
                 visited_faces.add(current_face)
-                linked.add(current_face)
+                connected_faces.add(current_face)
 
                 # Add neighboring faces (sharing edges)
                 for edge in current_face.edges:
@@ -70,16 +70,16 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
                         if linked_face not in visited_faces:
                             stack.append(linked_face)
 
-            return linked
+            return connected_faces
 
         # Find linked face islands
         for face in bm.faces:
             if face not in visited_faces:
-                linked_component = get_linked_faces(face)
-                linked_faces.append(linked_component)
+                connected_faces = get_connected_faces(face)
+                island_faces.append(connected_faces)
 
-        # Assign random color to each linked island
-        for component in linked_faces:
+        # Assign random color to each island
+        for component in island_faces:
             random_color = get_random_color(random_color_tool.color_mode)
 
             for face in component:
@@ -117,8 +117,8 @@ class MORECOLORS_OT_add_random_color(BaseColorOperator):
                     self.add_random_color_per_vertex(bm, color_layer, global_color_settings, random_color_tool)
                 case "Face":
                     self.add_random_color_per_face(bm, color_layer, global_color_settings, random_color_tool)
-                case "Linked":
-                    self.add_random_color_per_linked(bm, color_layer, global_color_settings, random_color_tool)
+                case "Island":
+                    self.add_random_color_per_island(bm, color_layer, global_color_settings, random_color_tool)
 
             bm.to_mesh(mesh)
             bm.free()

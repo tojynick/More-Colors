@@ -25,10 +25,10 @@ There are two ways to install the add-on: **via Blender's extensions** or **manu
 3. Click on the down arrow at the top right corner
 
    <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png"/>
-   
-5. Press **"Install from Disk..."**
-6. Selected the **downloaded package**
-7. Enjoy ✨
+
+4. Press **"Install from Disk..."**
+5. Selected the **downloaded package**
+6. Enjoy ✨
 
 ### Installation Via Blender's Extensions
 
@@ -94,11 +94,11 @@ There are several elements per which random colors will be generated:
 - **Points**
 - **Vertices**
 - **Faces**
-- **Linked**
+- **Islands**
 
 The difference between points and vertices is that _a point can share several vertices_, but _a vertex is the smallest unit and cannot be divided into something else_.
 
-Oh, and about linked. Linked elements usually occur, when you **combine several meshes into one**, by using Join _(Ctrl + J)_ for example. Even though the result of Join is a single mesh, you still can **split it by vertex connectivity** and **apply different colors per linked piece**.
+Oh, and about islands. Islands usually occur, when you **combine several meshes into one**, by using Join _(Ctrl + J)_ for example. Even though the result of Join is a single mesh, you still can **split it by vertex connectivity** and **apply different colors per island**.
 This might be useful when you have a complex object consisting of several independent parts and you want to quickly make an ID map for it.
 
 #### Color Generation Algorithm

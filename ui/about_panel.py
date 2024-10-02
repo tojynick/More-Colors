@@ -1,4 +1,3 @@
-import bpy
 from bpy.types import Panel
 from .base_panel_info import BasePanelInfo
 
@@ -8,10 +7,9 @@ class MORECOLORS_PT_about_panel(BasePanelInfo, Panel):
 
     def draw(self, context):
         layout = self.layout
-        preview_collection = bpy.types.Scene.preview_collection
 
         row = layout.row(align = True)        
-        row.label(text = "More Colors! v1.0.0", icon_value = preview_collection["MORE_COLORS_LOGO"].icon_id)
+        row.label(text = "More Colors! v1.0.1")
 
         row = layout.row()
         row.label(text = "Made with love by Kai Fardreamer", icon = "FUND")
