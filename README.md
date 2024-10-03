@@ -32,8 +32,6 @@ There are two ways to install the add-on: **via Blender's extensions** or **manu
 
 ### Installation Via Blender's Extensions
 
-🚧 The add-on is still under review, so at the moment it is not publicly visible as Blender extension. You can speed up the reviewing process by going to https://extensions.blender.org/approval-queue/more-colors/
-
 1. Inside Blender go to **Edit** -> **Preferences** -> **Get Extensions**
 2. In the search box type **"More Colors!"**
 3. Click **"Install"**
