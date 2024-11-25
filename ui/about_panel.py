@@ -9,7 +9,7 @@ class MORECOLORS_PT_about_panel(BasePanelInfo, Panel):
         layout = self.layout
 
         row = layout.row(align = True)        
-        row.label(text = "More Colors! v1.0.1")
+        row.label(text = "More Colors! v1.1.0")
 
         row = layout.row()
         row.label(text = "Made with love by Kai Fardreamer", icon = "FUND")

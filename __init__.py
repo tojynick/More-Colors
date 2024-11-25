@@ -3,7 +3,7 @@ bl_info = {
     "author": "tojynick",
     "description": "A set of tools to make vertex painting easier.",
     "blender": (4, 2, 0),
-    "version": (1, 0, 1),
+    "version": (1, 1, 0),
     "location": "3D View > Sidebar > More Colors!",
     "tracker_url": "https://github.com/tojynick/More-Colors",
     "support": "COMMUNITY",
