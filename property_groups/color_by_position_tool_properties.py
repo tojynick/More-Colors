@@ -1,5 +1,8 @@
-from bpy.props import EnumProperty
 from bpy.types import PropertyGroup
+
+from bpy.props import EnumProperty
+from bpy.props import StringProperty
+
 
 class ColorByPositionToolProperties(PropertyGroup):
     space_type: EnumProperty(
@@ -25,3 +28,5 @@ class ColorByPositionToolProperties(PropertyGroup):
             ],
         default = "Z"
         )
+    
+    color_ramp_material_name: StringProperty(name = "Color Ramp Material Name", default = "MORECOLORS_ColorByPositionRamp")

@@ -25,3 +25,6 @@ class DisplaySettingsProperties(PropertyGroup):
         update = on_settings_update
         )
     
+    alpha_display_material_name: StringProperty(name = "Alpha Display Material Name", default = "MORECOLORS_VertexColorAlphaDisplay")
+    
+    

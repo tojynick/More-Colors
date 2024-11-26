@@ -1,6 +1,10 @@
-from .base_operators import BaseColorOperator
-from ..utilities.color_utilities import get_masked_color
+import bpy
 import bmesh
+
+from .base_operators import BaseColorOperator
+from .base_operators import BaseOperator
+from ..utilities.color_utilities import get_masked_color
+
 
 class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
     """Adds a color based on vertex position for each selected mesh object"""
@@ -50,12 +54,13 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
                     vert_index = loop.vert.index
                     pos_value = vertex_positions[vert_index][axis_index]
 
-                    gradient_value = (pos_value - min_pos) / range
+                    gradient_position = (pos_value - min_pos) / range
                     
                     if reverse_gradient:
-                        gradient_value = 1 - gradient_value
+                        gradient_position = 1 - gradient_position
 
-                    color = (gradient_value, gradient_value, gradient_value, gradient_value)
+                    color_ramp = self.get_color_ramp(context)
+                    color = color_ramp.evaluate(gradient_position)
                     loop[color_layer] = get_masked_color(loop[color_layer], color, global_color_settings.get_mask())
 
             bm.to_mesh(mesh)
@@ -63,4 +68,42 @@ class MORECOLORS_OT_add_color_by_position(BaseColorOperator):
             obj.data.update()
 
         self.report({"INFO"}, "Vertex colors assigned successfully!")
+        return {"FINISHED"}
+    
+
+    def get_color_ramp(self, context):
+        scene = context.scene
+        color_by_position_tool = scene.more_colors_color_by_position_tool
+
+        material = bpy.data.materials.get(color_by_position_tool.color_ramp_material_name)
+        node = material.node_tree.nodes['Color Ramp']
+        color_ramp = node.color_ramp
+
+        return color_ramp
+
+
+class MORECOLORS_OT_initialize_color_by_position_tool(BaseOperator):
+    
+    bl_label = "Initialize Tool"
+    bl_idname = "morecolors.initialize_color_by_position_tool"
+    
+    def execute(self, context):
+        color_by_position_tool = context.scene.more_colors_color_by_position_tool
+        material_name = color_by_position_tool.color_ramp_material_name
+
+        material = bpy.data.materials.get(material_name)
+
+        if material is None:
+            material = bpy.data.materials.new(name = material_name)
+
+            material.use_nodes = True
+            nodes = material.node_tree.nodes
+            nodes.clear()
+
+            nodes.new(type = "ShaderNodeValToRGB")
+
+        nodes = material.node_tree.nodes
+
+        color_by_position_tool.is_tool_initialized = True
+
         return {"FINISHED"}

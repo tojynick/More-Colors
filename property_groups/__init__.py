@@ -22,7 +22,6 @@ def register():
     bpy.types.Scene.more_colors_simple_fill_tool = bpy.props.PointerProperty(type = simple_fill_tool_properties.SimpleFillToolProperties)
     bpy.types.Scene.more_colors_display_settings = bpy.props.PointerProperty(type = display_settings_properties.DisplaySettingsProperties)
 
-
 def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)

@@ -6,8 +6,6 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
     bl_label = "Display Vertex Colors"
     bl_idname = "morecolors.display_vertex_colors"
 
-    VERTEX_ALPHA_MAT_NAME = "VertexColorAlphaDisplay"
-
 
     def execute(self, context):
         settings = context.scene.more_colors_display_settings
@@ -60,13 +58,16 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
         context.space_data.shading.light = settings.previous_light_type
     
 
-    def get_or_create_alpha_display_material(self):
-        material = bpy.data.materials.get(self.VERTEX_ALPHA_MAT_NAME)
+    def get_or_create_alpha_display_material(self, context):
+        settings = context.scene.more_colors_display_settings
+        material_name = settings.alpha_display_material_name
+
+        material = bpy.data.materials.get(material_name)
 
         if material is not None:
             return material
 
-        material = bpy.data.materials.new(name = self.VERTEX_ALPHA_MAT_NAME)
+        material = bpy.data.materials.new(name = material_name)
         
         material.use_nodes = True
         nodes = material.node_tree.nodes
@@ -87,7 +88,10 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
     
 
     def apply_material_to_all_mesh_objects(self, context):
-        alpha_display_material = self.get_or_create_alpha_display_material()
+        alpha_display_material = self.get_or_create_alpha_display_material(context)
+
+        settings = context.scene.more_colors_display_settings
+        material_name = settings.alpha_display_material_name
         
         for obj in context.scene.objects:
             if obj.type == "MESH": 
@@ -96,7 +100,7 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
                 obj.data.materials.append(alpha_display_material)
 
                 # Make material active
-                new_material_index = obj.data.materials.find(self.VERTEX_ALPHA_MAT_NAME)
+                new_material_index = obj.data.materials.find(material_name)
                 obj.active_material_index = new_material_index
                 obj.active_material = alpha_display_material
                 
@@ -112,9 +116,12 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
     
 
     def remove_alpha_display_material_from_all_objects(self, context):
+        settings = context.scene.more_colors_display_settings
+        material_name = settings.alpha_display_material_name
+
         for obj in context.scene.objects:
             if obj.type == "MESH": 
                 for slot in obj.material_slots:
-                    if slot.material and slot.material.name == self.VERTEX_ALPHA_MAT_NAME:
-                        obj.data.materials.pop(index = obj.material_slots.find(self.VERTEX_ALPHA_MAT_NAME))
+                    if slot.material and slot.material.name == material_name:
+                        obj.data.materials.pop(index = obj.material_slots.find(material_name))
                         break

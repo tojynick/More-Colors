@@ -11,7 +11,7 @@ classes = [
     tools_panel.MORECOLORS_PT_tools_panel,
     random_color_tool_panel.MORECOLORS_PT_random_color_tool_panel,
     color_settings_panel.MORECOLORS_PT_global_color_settings_panel,
-    color_by_position_tool_panel.MORECOLORS_PT_random_color_tool_panel,
+    color_by_position_tool_panel.MORECOLORS_PT_color_by_position_tool_panel,
     simple_fill_tool_panel.MORECOLORS_PT_simple_fill_tool_panel
 ]
 
