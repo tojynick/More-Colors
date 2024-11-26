@@ -9,13 +9,19 @@ class MORECOLORS_PT_display_settings_panel(BasePanelInfo, Panel):
     def draw(self, context):
         layout = self.layout
 
+        display_settings = context.scene.more_colors_display_settings
+
         if context.object and context.object.type == "MESH":
             if context.object.mode != "VERTEX_PAINT":
                 row = layout.row()
-                if context.space_data.shading.color_type != "VERTEX":
-                    row.operator("morecolors.show_vertex_colors", icon = "HIDE_ON")
-                else:
-                    row.operator("morecolors.hide_vertex_colors", icon = "HIDE_OFF")
+                row.label(text = "Vertex colors display mode:", icon = "MESH_DATA")
+
+                row = layout.row()
+                row.prop(display_settings, "display_mode", expand = True)
+
+                row = layout.row()
+                row.label(text = "Alpha display mode will temporary override all mesh materials!", icon = "ERROR")
+
             else:
                 row = layout.row()
                 row.label(text = "Enter object mode!", icon = "ERROR")
