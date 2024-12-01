@@ -1,5 +1,6 @@
 import random
 import colorsys
+import bpy
 
 def get_random_color_by_RGBA():
     """Returns a tuple with 4 floats (RGBA), each float is a random between 0 and 1."""
@@ -30,6 +31,8 @@ def get_random_color(mode = "RGBA"):
             return get_random_color_by_RGBA()
         case "Hue":
             return get_random_color_by_hue()
+        case "Palette":
+            return get_color_from_palette()
 
 
 def get_masked_color(old_color, new_color, mask = (True, True, True, True)):
@@ -66,3 +69,16 @@ def get_active_color_attribute(obj):
         color_attribute = obj.data.color_attributes.new(name = "Color", type = "FLOAT_COLOR", domain = "CORNER")
 
     return color_attribute
+
+
+def get_color_from_palette():
+    """
+    Randomly selects a color from a 4-color palette. The palette is defined in random_color_tool_properties.py
+    """
+    scene = bpy.context.scene
+    random_color_tool = scene.more_colors_random_color_tool
+
+    palette = [random_color_tool.palette_color_1, random_color_tool.palette_color_2, random_color_tool.palette_color_3, random_color_tool.palette_color_4]
+    palette_color_id = random.randint(0, len(palette) - 1)
+
+    return palette[palette_color_id]

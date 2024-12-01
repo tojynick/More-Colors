@@ -42,5 +42,24 @@ class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
         row.label(text = "Color Generation Method:")
         row.prop(random_color_tool, "color_mode", expand = True)
 
+        if random_color_tool.color_mode == "Palette":
+            row = layout.row()
+            row.label(text = "Palette", icon = "COLOR")
+
+            column = layout.column(align = True)
+            split = column.split()
+
+            row = split.row()
+            row.prop(random_color_tool, "palette_color_1", text = "")
+
+            row = split.row()
+            row.prop(random_color_tool, "palette_color_2", text = "")
+
+            row = split.row()
+            row.prop(random_color_tool, "palette_color_3", text = "")
+
+            row = split.row()
+            row.prop(random_color_tool, "palette_color_4", text = "")
+
         row = layout.row()
         row.operator("morecolors.add_random_color", icon = "SHADERFX")
