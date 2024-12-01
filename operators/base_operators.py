@@ -1,4 +1,3 @@
-import bpy
 from bpy.types import Operator
 
 class BaseOperator(Operator):
@@ -10,4 +9,12 @@ class BaseColorOperator(BaseOperator):
 
     @classmethod
     def poll(cls, context):
-        return len(context.selected_objects) > 0 and bpy.context.object.mode == "OBJECT"
+
+        if len(context.selected_objects) == 0:
+            return False
+
+        for obj in context.selected_objects:
+            if obj.type != "MESH":
+                return False
+            
+        return True

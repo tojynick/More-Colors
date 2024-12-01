@@ -1,5 +1,6 @@
 from bpy.types import Panel
 from ..base_panel_info import BasePanelInfo
+from ...utilities.color_utilities import get_active_color_attribute
 
 class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
     bl_label = "Random Color Per Element"
@@ -13,11 +14,29 @@ class MORECOLORS_PT_random_color_tool_panel(BasePanelInfo, Panel):
         
         random_color_tool = context.scene.more_colors_random_color_tool
 
-        row = layout.row()
-        row.label(text = "Applies a random vertex color per selected element.")
+        show_element_type = True
+        obj = context.active_object
+
+        if obj is not None:
+            color_attribute = obj.data.color_attributes.active_color
+
+            if color_attribute is not None:
+                if color_attribute.domain == "POINT":
+                    show_element_type = False
+
+        if show_element_type:
+            row = layout.row()
+            row.label(text = "Applies a random vertex color per selected element.")
+
+            row = layout.row()
+            row.prop(random_color_tool, "element_type")
         
-        row = layout.row()
-        row.prop(random_color_tool, "element_type")
+        else:
+            row = layout.row()
+            row.label(text = "Applies a random vertex color per each point.")
+
+            row = layout.row()
+            row.label(text = "If you want to select the element you're applying a random color to, select a color attribute with a \"Face Corner\" domain!", icon = "INFO")
 
         row = layout.row()
         row.label(text = "Color Generation Method:")

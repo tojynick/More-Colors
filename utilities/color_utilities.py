@@ -9,7 +9,7 @@ def get_random_color_by_RGBA():
 def get_random_color_by_hue():
     """
     Generates a random color in HSL space, with hue being a random number between 0 and 1, saturation being 1, and lightness being 0.5.
-    Then, it converts from HSL to RGB space, returning as a float tuple with 4 components (RGBA), where alpha is always 1.
+    Then, it converts from HSL to RGB space, returning as a float tuple with 4 components (RGBA), where alpha is a random float between 0 and 1.
     """
     hue = random.random()
     saturation = 1
@@ -17,7 +17,7 @@ def get_random_color_by_hue():
     
     r, g, b = colorsys.hls_to_rgb(hue, lightness, saturation)
     
-    return (r, g, b, 1.0)
+    return (r, g, b, random.random())
 
 
 def get_random_color(mode = "RGBA"):
@@ -51,3 +51,18 @@ def get_masked_color(old_color, new_color, mask = (True, True, True, True)):
         result_color[3] = new_color[3]
 
     return result_color
+
+
+def get_active_color_attribute(obj):
+    """
+    Gets an active color attribute of the provided object.
+    If there are no color attributes on the object, the default one will be created.
+    """
+
+    color_attribute = obj.data.color_attributes.active_color
+
+    # Create a default color attribute layer if there are none
+    if color_attribute is None:
+        color_attribute = obj.data.color_attributes.new(name = "Color", type = "FLOAT_COLOR", domain = "CORNER")
+
+    return color_attribute

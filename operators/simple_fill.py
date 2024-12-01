@@ -1,19 +1,14 @@
-from ..utilities.color_utilities import get_masked_color
-from bpy.types import Operator
+from ..utilities.color_utilities import get_masked_color, get_active_color_attribute
+from .base_operators import BaseColorOperator
 import bpy
-import bmesh
 
 
-class MORECOLORS_OT_simple_fill(bpy.types.Operator):
+class MORECOLORS_OT_simple_fill(BaseColorOperator):
     """Applies a selected color to selected object(s) or part of the mesh"""
 
     bl_label = "Apply"
     bl_idname = "morecolors.simple_fill"
 
-    @classmethod
-    def poll(cls, context):
-        return len(context.selected_objects) > 0
-    
     def execute(self, context):
         if not context.selected_objects:
             self.report({"ERROR"}, "No objects selected!")
@@ -32,53 +27,53 @@ class MORECOLORS_OT_simple_fill(bpy.types.Operator):
             if was_in_edit_mode:
                 bpy.ops.object.mode_set(mode = "OBJECT")
 
-            mesh = obj.data
-            
-            if not mesh.vertex_colors:
-                mesh.vertex_colors.new(name = "Attribute")
+            color_attribute = get_active_color_attribute(obj)
 
-            bm = bmesh.new()
-            bm.from_mesh(mesh)
-            color_layer = bm.loops.layers.color.active
+            match color_attribute.domain:
+                case "CORNER":
+                    select_mode = context.tool_settings.mesh_select_mode
 
-            selected_mode = context.tool_settings.mesh_select_mode
+                    # Point Selection
+                    if select_mode[0]:
+                        for vert in obj.data.vertices:
+                            if vert.select:
+                                for poly in obj.data.polygons:
+                                    for loop_index in poly.loop_indices:
 
-            if was_in_edit_mode:
-                bm.faces.ensure_lookup_table()
-                bm.verts.ensure_lookup_table()
-                bm.edges.ensure_lookup_table()
-                
-                 # Vertex select mode
-                if selected_mode[0]: 
-                    selected_loops = [
-                        loop for vert in bm.verts if vert.select
-                        for loop in vert.link_loops
-                    ]
-                
-                # Edge select mode
-                elif selected_mode[1]:  
-                    selected_loops = [
-                        loop for edge in bm.edges if edge.select
-                        for loop in edge.link_loops
-                    ]
+                                        # Check if the loop belongs to the selected vertex
+                                        loop_vert_index = obj.data.loops[loop_index].vertex_index
+                                        if loop_vert_index == vert.index:  
+                                            data = color_attribute.data[loop_index]
+                                            data.color_srgb = get_masked_color(data.color_srgb, simple_fill_tool.selected_color, global_color_settings.get_mask())
 
-                # Face select mode
-                elif selected_mode[2]:  
-                    selected_loops = [
-                        loop for face in bm.faces if face.select
-                        for loop in face.loops
-                    ]
+                    # Edge Selection
+                    if select_mode[1]:
+                        for edge in obj.data.edges:
+                            if edge.select:
+                                for poly in obj.data.polygons:
+                                    for loop_index in poly.loop_indices:
 
-            # If was in object mode
-            else:
-                selected_loops = [loop for face in bm.faces for loop in face.loops]
+                                        # Check if the loop's vertex index belongs to the selected edge
+                                        loop_vert_index = obj.data.loops[loop_index].vertex_index
+                                        if loop_vert_index in edge.vertices:
+                                            data = color_attribute.data[loop_index]
+                                            data.color_srgb = get_masked_color(data.color_srgb, simple_fill_tool.selected_color, global_color_settings.get_mask())
 
-            for loop in selected_loops:
-                color = simple_fill_tool.selected_color
-                loop[color_layer] = get_masked_color(loop[color_layer], color, global_color_settings.get_mask())
+                    # Face Selection
+                    if select_mode[2]:
+                        for poly in obj.data.polygons:
+                            if poly.select:
+                                for loop_index in poly.loop_indices:
+                                    data = color_attribute.data[loop_index]
+                                    data.color_srgb = get_masked_color(data.color_srgb, simple_fill_tool.selected_color, global_color_settings.get_mask())
 
-            bm.to_mesh(mesh)
-            bm.free()
+
+                # Since "point" domain stores colors only for vertices, we can modify their color directly, without worrying about the selection mode or loop indices
+                case "POINT":
+                    for p in obj.data.vertices:
+                        if p.select:
+                            data = color_attribute.data[p.index]
+                            data.color_srgb = get_masked_color(data.color_srgb, simple_fill_tool.selected_color, global_color_settings.get_mask())
 
             obj.data.update()
 
@@ -106,17 +101,14 @@ class MORECOLORS_OT_select_preset_color(bpy.types.Operator):
         return {"FINISHED"}
     
 
-class MORECOLORS_OT_apply_preset_color(bpy.types.Operator):
+class MORECOLORS_OT_apply_preset_color(BaseColorOperator):
     """Applies the preset color to selected object(s) or part of the mesh"""
 
     bl_label = "Quick Apply"
     bl_idname = "morecolors.apply_preset_color"
 
     preset_name: bpy.props.StringProperty(options = {"HIDDEN"})
-
-    @classmethod
-    def poll(cls, context):
-        return len(context.selected_objects) > 0
+    
     
     def execute(self, context):
         scene = context.scene

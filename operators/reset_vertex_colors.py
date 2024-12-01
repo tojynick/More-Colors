@@ -1,8 +1,8 @@
+from ..utilities.color_utilities import get_active_color_attribute
 from .base_operators import BaseColorOperator
-import bpy
 
 class MORECOLORS_OT_reset_color(BaseColorOperator):
-    """Resets all vertex colors to black"""
+    """Resets all vertex colors to white"""
 
     bl_label = "Reset Vertex Colors"
     bl_idname = "morecolors.reset_vertex_colors"
@@ -12,16 +12,10 @@ class MORECOLORS_OT_reset_color(BaseColorOperator):
             if obj.type != "MESH":
                 continue
             
-            mesh = obj.data
-            
-            if not mesh.vertex_colors:
-                vertex_colors = mesh.vertex_colors.new(name = "Attribute")
-            else:
-                vertex_colors = mesh.vertex_colors.active
+            color_attribute = get_active_color_attribute(obj)
 
-            for face in mesh.polygons:
-                for loop_index in face.loop_indices:
-                    vertex_colors.data[loop_index].color = (0,0,0,0)
+            for data in color_attribute.data:
+                data.color_srgb = (1,1,1,1)
         
         self.report({"INFO"}, "Vertex colors have been reset!")
 

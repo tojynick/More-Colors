@@ -49,3 +49,6 @@ class MORECOLORS_PT_color_by_position_tool_panel(BasePanelInfo, Panel):
 
             row = layout.row()
             row.operator("morecolors.add_color_by_position", icon = "BRUSH_DATA")
+
+            row = layout.row()
+            row.operator("morecolors.reset_color_by_position_gradient", icon = "TRASH")

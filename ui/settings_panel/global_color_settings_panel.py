@@ -5,6 +5,7 @@ class MORECOLORS_PT_global_color_settings_panel(BasePanelInfo, Panel):
     bl_label = "Global Color Settings"
     bl_idname = "MORECOLORS_PT_global_color_settings_panel"
     bl_parent_id = "MORECOLORS_PT_settings_panel"
+    bl_order = 1
 
     def draw(self, context):
         layout = self.layout

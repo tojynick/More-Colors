@@ -23,12 +23,12 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
 
     def hide_vertex_colors(self, context):
         self.restore_scene_shading_settings(context)
-        self.remove_alpha_display_material_from_all_objects(context)
+        self.remove_alpha_display_material_from_all_mesh_objects(context)
     
     
     def display_vertex_colors_as_rgb(self, context):
         self.save_scene_shading_settings(context)
-        self.remove_alpha_display_material_from_all_objects(context)
+        self.remove_alpha_display_material_from_all_mesh_objects(context)
 
         context.space_data.shading.type = "SOLID"
         context.space_data.shading.color_type = "VERTEX"
@@ -37,7 +37,12 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
     
     def display_vertex_colors_as_alpha(self, context):
         self.restore_scene_shading_settings(context)
-        self.apply_material_to_all_mesh_objects(context)
+
+        self.remove_alpha_display_material_from_all_mesh_objects(context)
+        self.apply_alpha_display_material_to_active_mesh_object(context)
+
+        settings = context.scene.more_colors_display_settings
+        settings.previous_alpha_display_object = context.active_object
 
         context.space_data.shading.type = "MATERIAL"
 
@@ -64,7 +69,18 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
 
         material = bpy.data.materials.get(material_name)
 
+
         if material is not None:
+            # Update color attribute layer's name
+            if context.active_object is not None:
+                obj = context.active_object
+
+                nodes = material.node_tree.nodes
+                color_attribute_node = nodes.get("Color Attribute")
+                
+                if obj.data.color_attributes.active_color is not None:
+                    color_attribute_node.layer_name = obj.data.color_attributes.active_color.name
+
             return material
 
         material = bpy.data.materials.new(name = material_name)
@@ -80,20 +96,31 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
         color_attribute_node = nodes.new(type = "ShaderNodeVertexColor")
         color_attribute_node.location = (-300 , 0)
 
-        color_attribute_node.layer_name = "Attribute" # Change the layer name later
+        # Default layer namename
+        color_attribute_layer_name = "Color" 
+
+        if context.active_object is not None:
+            obj = context.active_object
+            
+            if obj.data.color_attributes.active_color is not None:
+                color_attribute_layer_name = obj.data.color_attributes.active_color.name
+            
+        color_attribute_node.layer_name = color_attribute_layer_name
         
         links.new(color_attribute_node.outputs["Alpha"], material_output.inputs["Surface"])
         
         return material
     
 
-    def apply_material_to_all_mesh_objects(self, context):
+    def apply_alpha_display_material_to_active_mesh_object(self, context):
         alpha_display_material = self.get_or_create_alpha_display_material(context)
 
         settings = context.scene.more_colors_display_settings
         material_name = settings.alpha_display_material_name
         
-        for obj in context.scene.objects:
+        obj = context.active_object
+
+        if obj is not None:
             if obj.type == "MESH": 
 
                 # Append material
@@ -113,15 +140,16 @@ class MORECOLORS_OT_display_vertex_colors(BaseOperator):
                 bpy.ops.object.material_slot_assign() 
 
                 bpy.ops.object.mode_set(mode = current_mode)
+            
     
 
-    def remove_alpha_display_material_from_all_objects(self, context):
+    def remove_alpha_display_material_from_all_mesh_objects(self, context):
         settings = context.scene.more_colors_display_settings
         material_name = settings.alpha_display_material_name
 
         for obj in context.scene.objects:
             if obj.type == "MESH": 
-                for slot in obj.material_slots:
-                    if slot.material and slot.material.name == material_name:
-                        obj.data.materials.pop(index = obj.material_slots.find(material_name))
-                        break
+                    for slot in obj.material_slots:
+                        if slot.material and slot.material.name == material_name:
+                            obj.data.materials.pop(index = obj.material_slots.find(material_name))
+            

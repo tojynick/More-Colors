@@ -1,14 +1,16 @@
 from bpy.types import Panel
 from ..base_panel_info import BasePanelInfo
 
+
 class MORECOLORS_PT_display_settings_panel(BasePanelInfo, Panel):
     bl_label = "Display Settings"
     bl_idname = "MORECOLORS_PT_display_settings_panel"
     bl_parent_id = "MORECOLORS_PT_settings_panel"
+    bl_order = 0
 
+    
     def draw(self, context):
         layout = self.layout
-
         display_settings = context.scene.more_colors_display_settings
 
         if context.object and context.object.type == "MESH":
@@ -20,7 +22,11 @@ class MORECOLORS_PT_display_settings_panel(BasePanelInfo, Panel):
                 row.prop(display_settings, "display_mode", expand = True)
 
                 row = layout.row()
-                row.label(text = "Alpha display mode will temporary override all mesh materials!", icon = "ERROR")
+                row.label(text = "Alpha display mode will temporary override the active object's materials!", icon = "ERROR")
+
+                row = layout.row()
+                row.label(text = "Don't forget to re-enable alpha display mode if you've selected a different object or color attribute.", icon = "INFO")
+
 
             else:
                 row = layout.row()
