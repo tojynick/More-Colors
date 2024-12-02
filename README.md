@@ -26,7 +26,7 @@ There are two ways to install the add-on: **via Blender's extensions** or **manu
 2. Inside Blender go to **Edit** -> **Preferences** -> **Get Extensions**
 3. Click on the down arrow at the top right corner
 
-   <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png"/>
+   <img alt="Installation step 4 screenshot" src="./resources/documentation/manual_installation_step_4.png" width=550>
 
 4. Press **"Install from Disk..."**
 5. Selected the **downloaded package**
@@ -41,7 +41,7 @@ There are two ways to install the add-on: **via Blender's extensions** or **manu
 
 ## 🚀 Getting Started
 
-After installing the add-on, you can see it on the side panel (press **N** to open it). It should look something like this: <img alt="Addon overview screenshot" src="./resources/documentation/overview.png"/>
+After installing the add-on, you can see it on the side panel (press **N** to open it). It should look something like this: <img alt="Addon overview screenshot" src="./resources/documentation/overview.png" width=550>
 
 As you can see, it consists of several main sections, including **About**, **Settings** and **Tools** sections.
 
@@ -79,14 +79,14 @@ Contains all the tools the add-on has to offer. At the moment it has a **Simple 
 
 ### Simple Fill Tool
 
-<img alt="Simple fill tool screenshot" src="./resources/documentation/simple_fill.png"/>
+<img alt="Simple fill tool screenshot" src="./resources/documentation/simple_fill.png" width=550>
 
 It applies a **selected color** to the **selected object(s) or selected parts of the mesh** _(points, edges, or faces)_.
 Also has four **preset colors**, you can _assign_ them as your main color with a **select button**, or _immediately apply_ them to the mesh with a **quick apply button**.
 
 ### Random Color Per Element Tool
 
-<img alt="Random color per element tool screenshot" src="./resources/documentation/random_color_per_element.png"/>
+<img alt="Random color per element tool screenshot" src="./resources/documentation/random_color_per_element.png" width=550>
 
 Applies a **random color** to the _selected object(s)_. **Doesn`t support applying colors to parts of the mesh!**
 
@@ -101,7 +101,7 @@ There are several elements per which random colors will be generated:
 
 #### Color Generation Algorithm
 
-Also, you can choose, how colors will be generated. There are three modes: **RGB**, **Hue** and **Palette**.
+Also, you can choose, how colors will be generated. There are three modes: **RGB**, **Hue**, and **Palette**.
 
 **RGB random colors** are colors, where each component _(red, green, and blue values)_ are independently generated numbers in a range from zero to one.
 
@@ -109,11 +109,11 @@ Also, you can choose, how colors will be generated. There are three modes: **RGB
 
 **Palette random colors** assigns randomly selected colors from a 4-color palette that you define. It might be useful if you want to use specific colors for the randomization.
 
-<img alt="Random color tool palette screenshot" src="./resources/documentation/random_color_per_element_palette.png"/>
+<img alt="Random color tool palette screenshot" src="./resources/documentation/random_color_per_element_palette.png" width=550>
 
 ### Color By Position Tool
 
-<img alt="Color by position tool screenshot" src="./resources/documentation/color_by_position.png"/>
+<img alt="Color by position tool screenshot" src="./resources/documentation/color_by_position.png" width=550>
 
 Generates a **gradient**, based on **vertex position** along a selected direction. You can choose between generating a gradient in the **object's local space** _(rotation affects the direction of the gradient)_ or in **world space** _(object rotation doesn't affect the gradient direction)_.
 
